@@ -1,0 +1,14 @@
+-keep class org.apache.poi.** { *; }
+-keep class org.apache.xmlbeans.** { *; }
+-keep class org.openxmlformats.** { *; }
+-keep class schemaorg_apache_xmlbeans.** { *; }
+-keep class com.microsoft.schemas.** { *; }
+-keep class org.etsi.** { *; }
+-keep class org.w3.** { *; }
+-dontwarn org.apache.poi.**
+-dontwarn org.apache.xmlbeans.**
+-dontwarn javax.xml.**
+-dontwarn aQute.**
+-dontwarn org.osgi.**
+-dontwarn sun.misc.**
+-keepattributes Signature, *Annotation*, EnclosingMethod, InnerClasses

@@ -1,0 +1,14 @@
+# Android build outputs
+**/build/
+.gradle/
+.idea/
+*.iml
+
+# Local SDK paths
+local.properties
+
+# Captures
+captures/
+
+# Keystore (test-only keystore committed intentionally)
+# release-key.jks  -- NOT ignored, committed for reproducible signing

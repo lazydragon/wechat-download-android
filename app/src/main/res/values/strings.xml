@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WeChat to DOCX</string>
+
+    <string name="home_title">WeChat to DOCX</string>
+    <string name="home_description">Share or paste a WeChat article URL (mp.weixin.qq.com) and convert it to a Word document with text, formatting, and images.</string>
+    <string name="home_open_settings">Settings</string>
+    <string name="home_paste_url">WeChat article URL</string>
+    <string name="home_convert">Convert</string>
+    <string name="home_last_result">Last conversion</string>
+    <string name="home_no_recent">No conversions yet</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_pick_directory">Choose download directory</string>
+    <string name="settings_current">Current directory</string>
+    <string name="settings_none_selected">None selected</string>
+    <string name="settings_embed_images">Embed images in DOCX</string>
+    <string name="settings_back">Back</string>
+
+    <string name="convert_title">Converting</string>
+    <string name="stage_idle">Preparing…</string>
+    <string name="stage_fetching">Fetching article…</string>
+    <string name="stage_parsing">Parsing HTML…</string>
+    <string name="stage_downloading_images">Downloading images %1$d / %2$d</string>
+    <string name="stage_building_docx">Building DOCX…</string>
+    <string name="stage_saving">Saving %1$s.docx…</string>
+    <string name="convert_success">Conversion complete</string>
+    <string name="convert_failure">Conversion failed</string>
+    <string name="convert_retry">Retry</string>
+    <string name="convert_done">Done</string>
+    <string name="convert_back">Back</string>
+
+    <string name="error_no_url">No WeChat article URL was found in the shared content.</string>
+    <string name="error_not_wechat_url">That URL is not a WeChat article (mp.weixin.qq.com).</string>
+    <string name="error_no_dir">No download directory configured. Please open Settings and pick a folder.</string>
+    <string name="error_network">Network error</string>
+    <string name="error_parse">Failed to parse the article</string>
+    <string name="error_save">Failed to save the file</string>
+</resources>
