@@ -37,6 +37,7 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.example.wechat2docx.R
+import com.example.wechat2docx.data.share.DoubaoLauncher
 import com.example.wechat2docx.domain.ConversionState
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -140,11 +141,23 @@ fun ConvertScreen(
                         horizontalArrangement = Arrangement.spacedBy(12.dp),
                         modifier = Modifier.fillMaxWidth(),
                     ) {
-                        Button(
+                        OutlinedButton(
                             onClick = { nav.popBackStack() },
                             modifier = Modifier.weight(1f),
                         ) {
                             Text(stringResource(R.string.convert_done))
+                        }
+                        Button(
+                            onClick = {
+                                val uri = s.contentUri
+                                if (uri != null) {
+                                    DoubaoLauncher.openInDoubao(ctx, uri, s.fileName)
+                                }
+                            },
+                            enabled = s.contentUri != null,
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(stringResource(R.string.open_in_doubao))
                         }
                     }
                 }

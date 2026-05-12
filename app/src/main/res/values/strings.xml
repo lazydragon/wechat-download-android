@@ -36,4 +36,11 @@
     <string name="error_network">Network error</string>
     <string name="error_parse">Failed to parse the article</string>
     <string name="error_save">Failed to save the file</string>
+
+    <!-- Doubao integration -->
+    <string name="open_in_doubao">Open in Doubao</string>
+    <string name="doubao_not_installed">Doubao app not found — please install Doubao to continue.</string>
+    <string name="doubao_opened_via_send">Sent to Doubao</string>
+    <string name="doubao_opened_via_deeplink">Opened Doubao</string>
+    <string name="doubao_opened_via_launch">Opened Doubao — please import the file manually.</string>
 </resources>

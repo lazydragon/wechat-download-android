@@ -3,13 +3,24 @@ package com.example.wechat2docx.data.storage
 import android.content.Context
 import android.net.Uri
 import android.os.Environment
+import androidx.core.content.FileProvider
 import androidx.documentfile.provider.DocumentFile
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
 sealed class SaveResult {
-    data class Success(val displayLocation: String) : SaveResult()
+    /**
+     * @param displayLocation human-readable location string for UI.
+     * @param contentUri      a content:// URI safe to share to other apps via
+     *                        FLAG_GRANT_READ_URI_PERMISSION. For SAF saves this
+     *                        is the DocumentFile.uri; for the app-private
+     *                        fallback this is wrapped via FileProvider.
+     */
+    data class Success(
+        val displayLocation: String,
+        val contentUri: Uri,
+    ) : SaveResult()
     data object NoTreeUri : SaveResult()
     data class Error(val msg: String) : SaveResult()
 }
@@ -51,7 +62,10 @@ object DocxSaver {
                 return@withContext SaveResult.Error("write failed: ${t.message}")
             }
             val locName = tree.name ?: tree.uri.lastPathSegment ?: tree.uri.toString()
-            SaveResult.Success("$locName / $sanitized")
+            SaveResult.Success(
+                displayLocation = "$locName / $sanitized",
+                contentUri = out.uri,
+            )
         } else {
             val dir = ctx.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
                 ?: return@withContext SaveResult.Error("no external files dir")
@@ -61,7 +75,16 @@ object DocxSaver {
             } catch (t: Throwable) {
                 return@withContext SaveResult.Error("write failed: ${t.message}")
             }
-            SaveResult.Success(f.absolutePath)
+            val authority = "${ctx.packageName}.fileprovider"
+            val uri = try {
+                FileProvider.getUriForFile(ctx, authority, f)
+            } catch (t: Throwable) {
+                return@withContext SaveResult.Error("FileProvider failed: ${t.message}")
+            }
+            SaveResult.Success(
+                displayLocation = f.absolutePath,
+                contentUri = uri,
+            )
         }
     }
 
