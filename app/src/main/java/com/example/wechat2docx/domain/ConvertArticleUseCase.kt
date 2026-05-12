@@ -2,6 +2,7 @@ package com.example.wechat2docx.domain
 
 import android.app.Application
 import android.net.Uri
+import android.os.Environment
 import com.example.wechat2docx.R
 import com.example.wechat2docx.data.docx.DocxBuilder
 import com.example.wechat2docx.data.net.WeChatHttpClient
@@ -9,6 +10,7 @@ import com.example.wechat2docx.data.parser.Block
 import com.example.wechat2docx.data.parser.WeChatHtmlParser
 import com.example.wechat2docx.data.prefs.SettingsRepository
 import com.example.wechat2docx.data.storage.DocxSaver
+import com.example.wechat2docx.data.storage.DownloadCleanup
 import com.example.wechat2docx.data.storage.SaveResult
 import com.example.wechat2docx.data.url.UrlExtractor
 import kotlinx.coroutines.Dispatchers
@@ -86,7 +88,23 @@ class ConvertArticleUseCase(
                 is SaveResult.Success -> {
                     val display = "$sanitizedName.docx → ${saveRes.displayLocation}"
                     settings.setLastResult(display)
-                    emit(ConversionState.Success(sanitizedName, saveRes.displayLocation))
+                    runCatching { settings.setLastSavedUri(saveRes.contentUri.toString()) }
+                    emit(
+                        ConversionState.Success(
+                            fileName = sanitizedName,
+                            location = saveRes.displayLocation,
+                            contentUri = saveRes.contentUri,
+                        )
+                    )
+                    // Best-effort cleanup. All errors swallowed inside DownloadCleanup.
+                    runCatching {
+                        if (treeUri != null) {
+                            DownloadCleanup.cleanupTree(app, treeUri)
+                        } else {
+                            val dir = app.getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS)
+                            if (dir != null) DownloadCleanup.cleanupDir(dir)
+                        }
+                    }
                 }
                 SaveResult.NoTreeUri -> emit(
                     ConversionState.Failure(app.getString(R.string.error_no_dir))

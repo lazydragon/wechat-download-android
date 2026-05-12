@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<paths>
+    <!-- getExternalFilesDir(Environment.DIRECTORY_DOCUMENTS) -->
+    <external-files-path name="docs" path="Documents/"/>
+    <!-- getExternalFilesDir(null) - broader fallback -->
+    <external-files-path name="ext_root" path="."/>
+    <!-- getCacheDir() -->
+    <cache-path name="cache" path="."/>
+    <!-- getExternalCacheDir() -->
+    <external-cache-path name="ext_cache" path="."/>
+</paths>

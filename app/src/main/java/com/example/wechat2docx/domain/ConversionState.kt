@@ -1,6 +1,7 @@
 package com.example.wechat2docx.domain
 
 import android.content.Context
+import android.net.Uri
 import com.example.wechat2docx.R
 
 sealed class ConversionState {
@@ -10,7 +11,11 @@ sealed class ConversionState {
     data class DownloadingImages(val done: Int, val total: Int) : ConversionState()
     data object BuildingDocx : ConversionState()
     data class Saving(val fileName: String) : ConversionState()
-    data class Success(val fileName: String, val location: String) : ConversionState()
+    data class Success(
+        val fileName: String,
+        val location: String,
+        val contentUri: Uri? = null,
+    ) : ConversionState()
     data class Failure(val message: String) : ConversionState()
 
     companion object {
