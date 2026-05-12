@@ -22,6 +22,14 @@ android {
             storePassword = "androidtest"
             keyAlias = "androidtest"
             keyPassword = "androidtest"
+            // Sign with v1 (JAR), v2, and v3 schemes. Some Chinese OEM
+            // installers (MIUI/HarmonyOS/EMUI/ColorOS) and pre-API-24
+            // sideload paths still require v1 — without it the package
+            // installer rejects the APK with "There was a problem
+            // parsing the package."
+            enableV1Signing = true
+            enableV2Signing = true
+            enableV3Signing = true
         }
     }
 
